@@ -1,0 +1,2396 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="9/21/2017 3:17:27 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ANUJ"
+  DTS:CreatorName="ANUJ\anujk"
+  DTS:DTSID="{C61991C8-1B9C-4D72-BD98-79951A31170E}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="13.0.4001.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="DataFlowDemo"
+  DTS:PackageType="5"
+  DTS:VersionBuild="17"
+  DTS:VersionGUID="{9E7A1396-4290-4A4C-8496-D0B0DFF44A4A}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{3F0B7606-77F0-41CA-8643-0F0C48A5D874}"
+      DTS:ObjectName="ANUJ.DWAdventureWorksLT2012Lab01">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectionString="Data Source=ANUJ;Initial Catalog=DWAdventureWorksLT2012Lab01;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Demo Package-{3F0B7606-77F0-41CA-8643-0F0C48A5D874}ANUJ.DWAdventureWorksLT2012Lab01;Auto Translate=False;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\Backup DB"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{f04d2f8c-8694-4d68-8d01-3c5d39773138}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Backup DB"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{3F0B7606-77F0-41CA-8643-0F0C48A5D874}"
+          SQLTask:SqlStatementSource="Use [Master]&#xA;Go&#xA;BAckup database [DWAdventureWorksLT2012Lab01]&#xA;To Disk = N'E:\Tutorial\Implementing ETL with SQL Server Integration Services\My COde\DWAdventureWorksLT2012Lab01'&#xA;WITH INIT&#xA;Go" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{53f5bc6d-c369-4a29-aab7-62f92636078f}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Drop factpkSales"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A1C246DA-3E89-4023-B76D-2F14EE7DF569}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Drop factpkSales"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{3F0B7606-77F0-41CA-8643-0F0C48A5D874}"
+              SQLTask:SqlStatementSource="ALTER TABLE dbo.FactSales DROP CONSTRAINT&#xA;pkFactSales;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container\Drop Foreign keys"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{1509102e-f6ad-46c8-805f-7a62c560f31b}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Drop Foreign keys"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{3F0B7606-77F0-41CA-8643-0F0C48A5D874}"
+              SQLTask:SqlStatementSource="ALTER TABLE dbo.FactSales DROP CONSTRAINT&#xA; fkFactSalesToDimProducts;&#xA;&#xA;ALTER TABLE dbo.FactSales DROP CONSTRAINT &#xA; fkFactSalesToDimCustomers;&#xA;&#xA;ALTER TABLE dbo.FactSales DROP CONSTRAINT&#xA; fkFactSalesOrderDateToDimDates;&#xA;&#xA;ALTER TABLE dbo.FactSales DROP CONSTRAINT&#xA; fkFactSalesShipDateDimDates; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{72780492-062D-4A08-9B6E-D80AF6F6EC1B}"
+          DTS:From="Package\Sequence Container\Drop Foreign keys"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container\Drop factpkSales" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container 1"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{9ff73ab0-8507-46da-bde5-1a41f2beceb4}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container 1">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{7F09546A-4254-413F-98F5-785B232D037B}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fill DimCustomer Data Flow Task"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimCustomers]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      connectionManagerRefId="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerID]"
+                          cachedDataType="i4"
+                          cachedName="CustomerID"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CompanyName]"
+                          cachedDataType="wstr"
+                          cachedLength="200"
+                          cachedName="CompanyName"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CompanyName]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ContactFullName]"
+                          cachedDataType="wstr"
+                          cachedLength="200"
+                          cachedName="ContactFullName"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContactFullName]"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ContactFullName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerID]"
+                          dataType="i4"
+                          name="CustomerID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CompanyName]"
+                          dataType="wstr"
+                          length="200"
+                          name="CompanyName" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ContactFullName]"
+                          dataType="wstr"
+                          length="200"
+                          name="ContactFullName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimCustomers]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      connectionManagerRefId="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerKey]"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerKey]"
+                          name="CustomerKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerID]"
+                          name="CustomerID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CompanyName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
+                          length="200"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CompanyName]"
+                          name="CompanyName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ContactFullName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ContactFullName]"
+                          length="200"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ContactFullName]"
+                          name="ContactFullName"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerID]"
+                          dataType="i4"
+                          name="CustomerID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CompanyName]"
+                          dataType="wstr"
+                          length="200"
+                          name="CompanyName" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ContactFullName]"
+                          dataType="wstr"
+                          length="200"
+                          name="ContactFullName" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
+                          name="CustomerKey" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerID]"
+                          name="CustomerID" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
+                          dataType="wstr"
+                          length="200"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CompanyName]"
+                          name="CompanyName" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ContactFullName]"
+                          dataType="wstr"
+                          length="200"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ContactFullName]"
+                          name="ContactFullName" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{6118C61B-2993-4676-AEAC-1A6B2C77D3A2}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fill DimProducts Data Flow Task"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimProducts]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      connectionManagerRefId="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductID]"
+                          cachedDataType="i4"
+                          cachedName="ProductID"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductID]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ProductName"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductName]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductColor]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ProductColor"
+                          cachedSortKeyPosition="-1"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductColor]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductColor]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductListPrice]"
+                          cachedDataType="cy"
+                          cachedName="ProductListPrice"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductListPrice]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductListPrice]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductSize]"
+                          cachedDataType="wstr"
+                          cachedLength="5"
+                          cachedName="ProductSize"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductSize]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductSize]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductWeight]"
+                          cachedDataType="numeric"
+                          cachedName="ProductWeight"
+                          cachedPrecision="8"
+                          cachedScale="2"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductWeight]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductWeight]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductCategoryID]"
+                          cachedDataType="i4"
+                          cachedName="ProductCategoryID"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductCategoryID]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductCategoryID]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductCategoryName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ProductCategoryName"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductCategoryName]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductCategoryName]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                          dataType="i4"
+                          name="ProductKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductID]"
+                          dataType="i4"
+                          name="ProductID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductName]"
+                          dataType="wstr"
+                          length="50"
+                          name="ProductName" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductColor]"
+                          dataType="wstr"
+                          length="50"
+                          name="ProductColor" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductListPrice]"
+                          dataType="cy"
+                          name="ProductListPrice" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductSize]"
+                          dataType="wstr"
+                          length="5"
+                          name="ProductSize" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductWeight]"
+                          dataType="numeric"
+                          name="ProductWeight"
+                          precision="8"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductCategoryID]"
+                          dataType="i4"
+                          name="ProductCategoryID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductCategoryName]"
+                          dataType="wstr"
+                          length="50"
+                          name="ProductCategoryName" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[DimProducts]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      connectionManagerRefId="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]"
+                          name="ProductID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductName]"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]"
+                          name="ProductName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductColor]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductColor]"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductColor]"
+                          name="ProductColor"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductListPrice]"
+                          dataType="cy"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductListPrice]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductListPrice]"
+                          name="ProductListPrice"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductSize]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductSize]"
+                          length="5"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductSize]"
+                          name="ProductSize"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductWeight]"
+                          dataType="numeric"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductWeight]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductWeight]"
+                          name="ProductWeight"
+                          precision="8"
+                          scale="2"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategoryID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductCategoryID]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategoryID]"
+                          name="ProductCategoryID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategoryName]"
+                          dataType="wstr"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductCategoryName]"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategoryName]"
+                          name="ProductCategoryName"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductKey]"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]"
+                          name="ProductKey"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductKey]"
+                          dataType="i4"
+                          name="ProductKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductID]"
+                          dataType="i4"
+                          name="ProductID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductName]"
+                          dataType="wstr"
+                          length="50"
+                          name="ProductName" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductColor]"
+                          dataType="wstr"
+                          length="50"
+                          name="ProductColor" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductListPrice]"
+                          dataType="cy"
+                          name="ProductListPrice" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductSize]"
+                          dataType="wstr"
+                          length="5"
+                          name="ProductSize" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductWeight]"
+                          dataType="numeric"
+                          name="ProductWeight"
+                          precision="8"
+                          scale="2" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductCategoryID]"
+                          dataType="i4"
+                          name="ProductCategoryID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductCategoryName]"
+                          dataType="wstr"
+                          length="50"
+                          name="ProductCategoryName" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductID]"
+                          name="ProductID" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductName]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductName]"
+                          name="ProductName" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductColor]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductColor]"
+                          name="ProductColor" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductListPrice]"
+                          dataType="cy"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductListPrice]"
+                          name="ProductListPrice" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductSize]"
+                          dataType="wstr"
+                          length="5"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductSize]"
+                          name="ProductSize" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductWeight]"
+                          dataType="numeric"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductWeight]"
+                          name="ProductWeight"
+                          precision="8"
+                          scale="2" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductCategoryID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductCategoryID]"
+                          name="ProductCategoryID" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductCategoryName]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductCategoryName]"
+                          name="ProductCategoryName" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductKey]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductKey]"
+                          name="ProductKey" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort"
+                  componentClassID="Microsoft.Sort"
+                  contactInfo="Sort;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;1"
+                  description="Sorts input data in ascending or descending order when it cannot be sorted at its source. For example, sort sales data by 'customer id' before it is written to a flat file and delivered to another department. Note: We do not recommend this transformation for large data flows."
+                  name="Sort"
+                  version="1">
+                  <properties>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the Sort transformation removes rows with duplicate sort values."
+                      name="EliminateDuplicates">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the maximum number of threads to use for sorting."
+                      expressionType="Notify"
+                      name="MaximumThreads">-1</property>
+                  </properties>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input]"
+                      name="Sort Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductKey]"
+                          cachedDataType="i4"
+                          cachedName="ProductKey"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductID]"
+                          cachedDataType="i4"
+                          cachedName="ProductID"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ProductName"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductColor]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ProductColor"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductColor]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">-1</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductListPrice]"
+                          cachedDataType="cy"
+                          cachedName="ProductListPrice"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductListPrice]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductSize]"
+                          cachedDataType="wstr"
+                          cachedLength="5"
+                          cachedName="ProductSize"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductSize]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductWeight]"
+                          cachedDataType="numeric"
+                          cachedName="ProductWeight"
+                          cachedPrecision="8"
+                          cachedScale="2"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductWeight]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductCategoryID]"
+                          cachedDataType="i4"
+                          cachedName="ProductCategoryID"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategoryID]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                        <inputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input].Columns[ProductCategoryName]"
+                          cachedDataType="wstr"
+                          cachedLength="50"
+                          cachedName="ProductCategoryName"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategoryName]">
+                          <properties>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the comparison options for character data."
+                              name="NewComparisonFlags">0</property>
+                            <property
+                              dataType="System.Int32"
+                              description="Specifies the sort order of the column."
+                              name="NewSortKeyPosition">0</property>
+                          </properties>
+                        </inputColumn>
+                      </inputColumns>
+                      <externalMetadataColumns />
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output]"
+                      isSorted="true"
+                      name="Sort Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductKey]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductKey]"
+                          name="ProductKey">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductID]"
+                          name="ProductID">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductID]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductName]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductName]"
+                          name="ProductName">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductName]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductColor]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductColor]"
+                          name="ProductColor"
+                          sortKeyPosition="-1">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductColor]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductListPrice]"
+                          dataType="cy"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductListPrice]"
+                          name="ProductListPrice">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductListPrice]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductSize]"
+                          dataType="wstr"
+                          length="5"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductSize]"
+                          name="ProductSize">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductSize]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductWeight]"
+                          dataType="numeric"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductWeight]"
+                          name="ProductWeight"
+                          precision="8"
+                          scale="2">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductWeight]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductCategoryID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductCategoryID]"
+                          name="ProductCategoryID">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategoryID]}</property>
+                          </properties>
+                        </outputColumn>
+                        <outputColumn
+                          refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductCategoryName]"
+                          dataType="wstr"
+                          length="50"
+                          lineageId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output].Columns[ProductCategoryName]"
+                          name="ProductCategoryName">
+                          <properties>
+                            <property
+                              containsID="true"
+                              dataType="System.Int32"
+                              description="Specifies the lineage identifier of the input column that is associated with this output column."
+                              name="SortColumnId">#{Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductCategoryName]}</property>
+                          </properties>
+                        </outputColumn>
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Inputs[Sort Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]" />
+                <path
+                  refId="Package\Sequence Container 1\Fill DimProducts Data Flow Task.Paths[Sort Output]"
+                  endId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="Sort Output"
+                  startId="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort.Outputs[Sort Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container 1.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{BC2C46D3-AFE7-41ED-840F-E1C670386D0F}"
+          DTS:From="Package\Sequence Container 1\Fill DimCustomer Data Flow Task"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container 1\Fill DimProducts Data Flow Task" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container 2"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{c41ba146-6f61-47f8-b902-f972f5079e9c}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container 2">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 2\Fill FactSales Data Flow Task"
+          DTS:CreationName="Microsoft.Pipeline"
+          DTS:Description="Data Flow Task"
+          DTS:DTSID="{7C18BC7C-169F-4C09-AB67-DE6EF8C6D8C1}"
+          DTS:ExecutableType="Microsoft.Pipeline"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Fill FactSales Data Flow Task"
+          DTS:TaskContact="Performs high-performance data extraction, transformation and loading;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <pipeline
+              version="1">
+              <components>
+                <component
+                  refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination"
+                  componentClassID="Microsoft.OLEDBDestination"
+                  contactInfo="OLE DB Destination;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;4"
+                  description="OLE DB Destination"
+                  name="OLE DB Destination"
+                  usesDispositions="true"
+                  version="4">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[FactSales]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the values supplied for identity columns will be copied to the destination. If false, values for identity columns will be auto-generated at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepIdentity">false</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Indicates whether the columns containing null will have null inserted in the destination. If false, columns containing null will have their default values inserted at the destination. Applies only if fast load is turned on."
+                      name="FastLoadKeepNulls">false</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies options to be used with fast load.  Applies only if fast load is turned on."
+                      name="FastLoadOptions">TABLOCK,CHECK_CONSTRAINTS</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies when commits are issued during data insertion.  A value of 0 specifies that one commit will be issued at the end of data insertion.  Applies only if fast load is turned on."
+                      name="FastLoadMaxInsertCommitSize">2147483647</property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      connectionManagerRefId="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <inputs>
+                    <input
+                      refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                      errorOrTruncationOperation="Insert"
+                      errorRowDisposition="FailComponent"
+                      hasSideEffects="true"
+                      name="OLE DB Destination Input">
+                      <inputColumns>
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SalesOrderID]"
+                          cachedDataType="i4"
+                          cachedName="SalesOrderID"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SalesOrderID]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesOrderID]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[SalesOrderDetailID]"
+                          cachedDataType="i4"
+                          cachedName="SalesOrderDetailID"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SalesOrderDetailID]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[CustomerKey]"
+                          cachedDataType="i4"
+                          cachedName="CustomerKey"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerKey]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ProductKey]"
+                          cachedDataType="i4"
+                          cachedName="ProductKey"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderDateKey]"
+                          cachedDataType="i4"
+                          cachedName="OrderDateKey"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderDateKey]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDateKey]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[ShipDateKey]"
+                          cachedDataType="i4"
+                          cachedName="ShipDateKey"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ShipDateKey]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipDateKey]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[OrderQty]"
+                          cachedDataType="i2"
+                          cachedName="OrderQty"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderQty]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderQty]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UnitPrice]"
+                          cachedDataType="cy"
+                          cachedName="UnitPrice"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UnitPrice]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPrice]" />
+                        <inputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].Columns[UnitPriceDiscount]"
+                          cachedDataType="cy"
+                          cachedName="UnitPriceDiscount"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UnitPriceDiscount]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]" />
+                      </inputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SalesOrderID]"
+                          dataType="i4"
+                          name="SalesOrderID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[SalesOrderDetailID]"
+                          dataType="i4"
+                          name="SalesOrderDetailID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ProductKey]"
+                          dataType="i4"
+                          name="ProductKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderDateKey]"
+                          dataType="i4"
+                          name="OrderDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[ShipDateKey]"
+                          dataType="i4"
+                          name="ShipDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[OrderQty]"
+                          dataType="i2"
+                          name="OrderQty" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UnitPrice]"
+                          dataType="cy"
+                          name="UnitPrice" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input].ExternalColumns[UnitPriceDiscount]"
+                          dataType="cy"
+                          name="UnitPriceDiscount" />
+                      </externalMetadataColumns>
+                    </input>
+                  </inputs>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output]"
+                      exclusionGroup="1"
+                      isErrorOut="true"
+                      name="OLE DB Destination Error Output"
+                      synchronousInputId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Outputs[OLE DB Destination Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+                <component
+                  refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source"
+                  componentClassID="Microsoft.OLEDBSource"
+                  contactInfo="OLE DB Source;Microsoft Corporation; Microsoft SQL Server; (C) Microsoft Corporation; All Rights Reserved; http://www.microsoft.com/sql/support;7"
+                  description="OLE DB Source"
+                  name="OLE DB Source"
+                  usesDispositions="true"
+                  version="7">
+                  <properties>
+                    <property
+                      dataType="System.Int32"
+                      description="The number of seconds before a command times out.  A value of 0 indicates an infinite time-out."
+                      name="CommandTimeout">0</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the name of the database object used to open a rowset."
+                      name="OpenRowset">[dbo].[FactSales]</property>
+                    <property
+                      dataType="System.String"
+                      description="Specifies the variable that contains the name of the database object used to open a rowset."
+                      name="OpenRowsetVariable"></property>
+                    <property
+                      dataType="System.String"
+                      description="The SQL command to be executed."
+                      name="SqlCommand"
+                      UITypeEditor="Microsoft.DataTransformationServices.Controls.ModalMultilineStringEditor"></property>
+                    <property
+                      dataType="System.String"
+                      description="The variable that contains the SQL command to be executed."
+                      name="SqlCommandVariable"></property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the column code page to use when code page information is unavailable from the data source."
+                      name="DefaultCodePage">1252</property>
+                    <property
+                      dataType="System.Boolean"
+                      description="Forces the use of the DefaultCodePage property value when describing character data."
+                      name="AlwaysUseDefaultCodePage">false</property>
+                    <property
+                      dataType="System.Int32"
+                      description="Specifies the mode used to access the database."
+                      name="AccessMode"
+                      typeConverter="AccessMode">0</property>
+                    <property
+                      dataType="System.String"
+                      description="The mappings between the parameters in the SQL command and variables."
+                      name="ParameterMapping"></property>
+                  </properties>
+                  <connections>
+                    <connection
+                      refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Connections[OleDbConnection]"
+                      connectionManagerID="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      connectionManagerRefId="Package.ConnectionManagers[ANUJ.DWAdventureWorksLT2012Lab01]"
+                      description="The OLE DB runtime connection used to access the database."
+                      name="OleDbConnection" />
+                  </connections>
+                  <outputs>
+                    <output
+                      refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]"
+                      name="OLE DB Source Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesOrderID]"
+                          name="SalesOrderID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderDetailID]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[SalesOrderDetailID]"
+                          name="SalesOrderDetailID"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerKey]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[CustomerKey]"
+                          name="CustomerKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductKey]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ProductKey]"
+                          name="ProductKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDateKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderDateKey]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderDateKey]"
+                          name="OrderDateKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipDateKey]"
+                          dataType="i4"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShipDateKey]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[ShipDateKey]"
+                          name="ShipDateKey"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                          dataType="i2"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[OrderQty]"
+                          name="OrderQty"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                          dataType="cy"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPrice]"
+                          name="UnitPrice"
+                          truncationRowDisposition="FailComponent" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]"
+                          dataType="cy"
+                          errorOrTruncationOperation="Conversion"
+                          errorRowDisposition="FailComponent"
+                          externalMetadataColumnId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].Columns[UnitPriceDiscount]"
+                          name="UnitPriceDiscount"
+                          truncationRowDisposition="FailComponent" />
+                      </outputColumns>
+                      <externalMetadataColumns
+                        isUsed="True">
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderID]"
+                          dataType="i4"
+                          name="SalesOrderID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[SalesOrderDetailID]"
+                          dataType="i4"
+                          name="SalesOrderDetailID" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[CustomerKey]"
+                          dataType="i4"
+                          name="CustomerKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ProductKey]"
+                          dataType="i4"
+                          name="ProductKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderDateKey]"
+                          dataType="i4"
+                          name="OrderDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[ShipDateKey]"
+                          dataType="i4"
+                          name="ShipDateKey" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[OrderQty]"
+                          dataType="i2"
+                          name="OrderQty" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UnitPrice]"
+                          dataType="cy"
+                          name="UnitPrice" />
+                        <externalMetadataColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output].ExternalColumns[UnitPriceDiscount]"
+                          dataType="cy"
+                          name="UnitPriceDiscount" />
+                      </externalMetadataColumns>
+                    </output>
+                    <output
+                      refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output]"
+                      isErrorOut="true"
+                      name="OLE DB Source Error Output">
+                      <outputColumns>
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesOrderID]"
+                          name="SalesOrderID" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesOrderDetailID]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[SalesOrderDetailID]"
+                          name="SalesOrderDetailID" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[CustomerKey]"
+                          name="CustomerKey" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductKey]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ProductKey]"
+                          name="ProductKey" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderDateKey]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderDateKey]"
+                          name="OrderDateKey" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ShipDateKey]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ShipDateKey]"
+                          name="ShipDateKey" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                          dataType="i2"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[OrderQty]"
+                          name="OrderQty" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                          dataType="cy"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UnitPrice]"
+                          name="UnitPrice" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UnitPriceDiscount]"
+                          dataType="cy"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[UnitPriceDiscount]"
+                          name="UnitPriceDiscount" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorCode]"
+                          name="ErrorCode"
+                          specialFlags="1" />
+                        <outputColumn
+                          refId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          dataType="i4"
+                          lineageId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Error Output].Columns[ErrorColumn]"
+                          name="ErrorColumn"
+                          specialFlags="2" />
+                      </outputColumns>
+                      <externalMetadataColumns />
+                    </output>
+                  </outputs>
+                </component>
+              </components>
+              <paths>
+                <path
+                  refId="Package\Sequence Container 2\Fill FactSales Data Flow Task.Paths[OLE DB Source Output]"
+                  endId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination.Inputs[OLE DB Destination Input]"
+                  name="OLE DB Source Output"
+                  startId="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source.Outputs[OLE DB Source Output]" />
+              </paths>
+            </pipeline>
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\Sequence Container 3"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{44904da3-9d16-4dc8-8c1f-025fc7347d42}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="Sequence Container 3">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 3\Add Foreign Keys"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{0ac702e5-202b-4213-9f71-7611aac29ab8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Add Foreign Keys"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{3F0B7606-77F0-41CA-8643-0F0C48A5D874}"
+              SQLTask:SqlStatementSource="ALTER TABLE dbo.FactSales ADD CONSTRAINT&#xA; fkFactSalesToDimProducts FOREIGN KEY (ProductKey) &#xA; REFERENCES dbo.DimProducts (ProductKey);&#xA;&#xA;ALTER TABLE dbo.FactSales ADD CONSTRAINT &#xA; fkFactSalesToDimCustomers FOREIGN KEY (CustomerKey) &#xA; REFERENCES dbo.DimCustomers (CustomerKey);&#xA; &#xA;ALTER TABLE dbo.FactSales ADD CONSTRAINT&#xA; fkFactSalesOrderDateToDimDates FOREIGN KEY (OrderDateKey) &#xA; REFERENCES dbo.DimDates(CalendarDateKey);&#xA;&#xA;ALTER TABLE dbo.FactSales ADD CONSTRAINT&#xA; fkFactSalesShipDateDimDates FOREIGN KEY (ShipDateKey)&#xA; REFERENCES dbo.DimDates (CalendarDateKey);" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\Sequence Container 3\Add pkFactSales"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{FAD51B28-1E8B-4A78-A4FF-F35FE7D79B61}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="Add pkFactSales"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2016; © 2015 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{3F0B7606-77F0-41CA-8643-0F0C48A5D874}"
+              SQLTask:SqlStatementSource="ALTER TABLE dbo.FactSales ADD CONSTRAINT&#xA;&#x9;[pkFactSales] PRIMARY KEY &#xA;&#x9;(&#xA;&#x9;  SalesOrderID&#xA;&#x9;, SalesOrderDetailID&#xA;&#x9;, CustomerKey&#xA;&#x9;, ProductKey&#xA;&#x9;, OrderDateKey&#xA;&#x9;)&#xA;go" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\Sequence Container 3.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{AD77D09F-76E9-420C-A299-31443FA105BD}"
+          DTS:From="Package\Sequence Container 3\Add Foreign Keys"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\Sequence Container 3\Add pkFactSales" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{cb6e2127-b6e9-409f-baec-e1df535545fd}"
+      DTS:From="Package\Sequence Container"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\Sequence Container 1" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{7e1eb539-4787-4deb-8bf7-2190ad0b1f44}"
+      DTS:From="Package\Sequence Container 1"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\Sequence Container 2" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{90be0c1b-0e21-4382-97bd-8fe8e7b7b92a}"
+      DTS:From="Package\Sequence Container 2"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\Sequence Container 3" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{5e61a581-e601-42d4-8649-34964d8d68c9}"
+      DTS:From="Package\Sequence Container 3"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\Backup DB" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="165,42"
+          Id="Package\Sequence Container\Drop Foreign keys"
+          TopLeft="26,8" />
+        <NodeLayout
+          Size="158,42"
+          Id="Package\Sequence Container\Drop factpkSales"
+          TopLeft="14,90" />
+        <EdgeLayout
+          Id="Package\Sequence Container.PrecedenceConstraints[Constraint]"
+          TopLeft="108.5,50">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15.5,40"
+              Start="0,0"
+              End="-15.5,32.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,16" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,16"
+                    Point2="0,20"
+                    Point3="-4,20" />
+                  <mssgle:LineSegment
+                    End="-11.5,20" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.5,20"
+                    Point2="-15.5,20"
+                    Point3="-15.5,24" />
+                  <mssgle:LineSegment
+                    End="-15.5,32.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="234,193"
+          Size="234,236"
+          Id="Package\Sequence Container"
+          TopLeft="18.25,13" />
+        <NodeLayout
+          Size="234,42"
+          Id="Package\Sequence Container 1\Fill DimCustomer Data Flow Task"
+          TopLeft="37,10" />
+        <NodeLayout
+          Size="230,42"
+          Id="Package\Sequence Container 1\Fill DimProducts Data Flow Task"
+          TopLeft="30,95" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1.PrecedenceConstraints[Constraint]"
+          TopLeft="154,52">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-9,43"
+              Start="0,0"
+              End="-9,35.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.5"
+                    Point2="0,21.5"
+                    Point3="-4,21.5" />
+                  <mssgle:LineSegment
+                    End="-5,21.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-5,21.5"
+                    Point2="-9,21.5"
+                    Point3="-9,25.5" />
+                  <mssgle:LineSegment
+                    End="-9,35.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="276,156"
+          Size="276,199"
+          Id="Package\Sequence Container 1"
+          TopLeft="425.25,13" />
+        <NodeLayout
+          Size="215,42"
+          Id="Package\Sequence Container 2\Fill FactSales Data Flow Task"
+          TopLeft="25,23" />
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="264,127"
+          Size="264,170"
+          Id="Package\Sequence Container 2"
+          TopLeft="44,301" />
+        <NodeLayout
+          Size="161,42"
+          Id="Package\Sequence Container 3\Add Foreign Keys"
+          TopLeft="23,25" />
+        <NodeLayout
+          Size="156,42"
+          Id="Package\Sequence Container 3\Add pkFactSales"
+          TopLeft="16,89" />
+        <EdgeLayout
+          Id="Package\Sequence Container 3.PrecedenceConstraints[Constraint]"
+          TopLeft="184,46">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-12,64"
+              Start="0,0"
+              End="-4.5,64">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="18.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="18.5,0"
+                    Point2="22.5,0"
+                    Point3="22.5,4" />
+                  <mssgle:LineSegment
+                    End="22.5,60" />
+                  <mssgle:CubicBezierSegment
+                    Point1="22.5,60"
+                    Point2="22.5,64"
+                    Point3="18.5,64" />
+                  <mssgle:LineSegment
+                    End="-4.5,64" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="230,188"
+          Size="230,231"
+          Id="Package\Sequence Container 3"
+          TopLeft="371,310" />
+        <NodeLayout
+          Size="130,42"
+          Id="Package\Backup DB"
+          TopLeft="626.75,429.5" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="252.25,131">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="173,-18.5"
+              Start="0,0"
+              End="165.5,-18.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="82.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="82.5,0"
+                    Point2="86.5,0"
+                    Point3="86.5,-4" />
+                  <mssgle:LineSegment
+                    End="86.5,-14.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="86.5,-14.5"
+                    Point2="86.5,-18.5"
+                    Point3="90.5,-18.5" />
+                  <mssgle:LineSegment
+                    End="165.5,-18.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="563.25,212">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-387.25,89"
+              Start="0,0"
+              End="-387.25,81.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,40.5"
+                    Point2="0,44.5"
+                    Point3="-4,44.5" />
+                  <mssgle:LineSegment
+                    End="-383.25,44.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-383.25,44.5"
+                    Point2="-387.25,44.5"
+                    Point3="-387.25,48.5" />
+                  <mssgle:LineSegment
+                    End="-387.25,81.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="308,386">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="63,39.5"
+              Start="0,0"
+              End="55.5,39.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="27.5,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="27.5,0"
+                    Point2="31.5,0"
+                    Point3="31.5,4" />
+                  <mssgle:LineSegment
+                    End="31.5,35.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="31.5,35.5"
+                    Point2="31.5,39.5"
+                    Point3="35.5,39.5" />
+                  <mssgle:LineSegment
+                    End="55.5,39.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="601,425.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="25.75,25"
+              Start="0,0"
+              End="18.25,25">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="8.875,0" />
+                  <mssgle:CubicBezierSegment
+                    Point1="8.875,0"
+                    Point2="12.875,0"
+                    Point3="12.875,4" />
+                  <mssgle:LineSegment
+                    End="12.875,21" />
+                  <mssgle:CubicBezierSegment
+                    Point1="12.875,21"
+                    Point2="12.875,25"
+                    Point3="16.875,25" />
+                  <mssgle:LineSegment
+                    End="18.25,25" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+  <TaskHost
+    design-time-name="Package\Sequence Container 1\Fill DimCustomer Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source"
+          TopLeft="144.5,70.5" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination"
+          TopLeft="142,178" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Fill DimCustomer Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="219.5,112.5">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="8,65.5"
+              Start="0,0"
+              End="8,58">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,28.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,28.75"
+                    Point2="0,32.75"
+                    Point3="4,32.75" />
+                  <mssgle:LineSegment
+                    End="4,32.75" />
+                  <mssgle:CubicBezierSegment
+                    Point1="4,32.75"
+                    Point2="8,32.75"
+                    Point3="8,36.75" />
+                  <mssgle:LineSegment
+                    End="8,58" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Sequence Container 1\Fill DimProducts Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source"
+          TopLeft="241,99" />
+        <NodeLayout
+          Size="98,42"
+          Id="Package\Sequence Container 1\Fill DimProducts Data Flow Task\Sort"
+          TopLeft="267,170" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Fill DimProducts Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="316,141">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,29"
+              Start="0,0"
+              End="0,21.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,21.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination"
+          TopLeft="232,262" />
+        <EdgeLayout
+          Id="Package\Sequence Container 1\Fill DimProducts Data Flow Task.Paths[Sort Output]"
+          TopLeft="316.75,212">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,50"
+              Start="0,0"
+              End="0,42.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,42.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <TaskHost
+    design-time-name="Package\Sequence Container 2\Fill FactSales Data Flow Task">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="150,42"
+          Id="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source"
+          TopLeft="202,102" />
+        <NodeLayout
+          Size="171,42"
+          Id="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination"
+          TopLeft="273,273" />
+        <EdgeLayout
+          Id="Package\Sequence Container 2\Fill FactSales Data Flow Task.Paths[OLE DB Source Output]"
+          TopLeft="277,144">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="81.5,129"
+              Start="0,0"
+              End="81.5,121.5">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,60.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,60.5"
+                    Point2="0,64.5"
+                    Point3="4,64.5" />
+                  <mssgle:LineSegment
+                    End="77.5,64.5" />
+                  <mssgle:CubicBezierSegment
+                    Point1="77.5,64.5"
+                    Point2="81.5,64.5"
+                    Point3="81.5,68.5" />
+                  <mssgle:LineSegment
+                    End="81.5,121.5" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </TaskHost>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Source">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Fill DimProducts Data Flow Task\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 1\Fill DimCustomer Data Flow Task\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\Sequence Container 2\Fill FactSales Data Flow Task\OLE DB Destination">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,40 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.23107.0
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{159641D6-6404-4A2A-AE62-294DE0FE8301}") = "SSIS Demo", "SSIS Demo\SSIS Demo.dtproj", "{864D5C3B-4B5D-4DE7-821D-1E3ED0BB35EE}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SQL Scripts", "SQL Scripts", "{D97CC8E7-E06D-409E-926A-C023A728A76D}"
+	ProjectSection(SolutionItems) = preProject
+		SQL Scripts\Creating Datawarehouse.sql = SQL Scripts\Creating Datawarehouse.sql
+		SQL Scripts\DELETE Versus TRUNCATE.sql = SQL Scripts\DELETE Versus TRUNCATE.sql
+		SQL Scripts\Flush and Fill DW script.sql = SQL Scripts\Flush and Fill DW script.sql
+		SQL Scripts\Incremental Loading with SQL merge command.sql = SQL Scripts\Incremental Loading with SQL merge command.sql
+		SQL Scripts\Incremental Loading.sql = SQL Scripts\Incremental Loading.sql
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lab1", "Lab1", "{740F423F-E020-4154-8C62-6525F4A278F6}"
+	ProjectSection(SolutionItems) = preProject
+		..\..\Lab1\Create DW.sql = ..\..\Lab1\Create DW.sql
+		..\..\Lab1\Create ETL views.sql = ..\..\Lab1\Create ETL views.sql
+		..\..\Lab1\ET Script.sql = ..\..\Lab1\ET Script.sql
+		..\..\Lab1\ETL Stored procedure.sql = ..\..\Lab1\ETL Stored procedure.sql
+		..\..\Lab1\ETL tables.sql = ..\..\Lab1\ETL tables.sql
+	EndProjectSection
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{864D5C3B-4B5D-4DE7-821D-1E3ED0BB35EE}.Development|Default.ActiveCfg = Development
+		{864D5C3B-4B5D-4DE7-821D-1E3ED0BB35EE}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{740F423F-E020-4154-8C62-6525F4A278F6} = {D97CC8E7-E06D-409E-926A-C023A728A76D}
+	EndGlobalSection
+EndGlobal
